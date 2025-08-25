@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>محلات الهيبة للدهان</title>
+  <style>
+  footer p:last-child {
+  font-size: 14px;
+  color: #f1f1f1;
+  margin-top: 5px;
+  font-style: italic;
+  }
+
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tahoma', sans-serif;}
+    body {background: #f7f7f7; color: #333;}
+
+    header {background: #1e3a8a; color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center;}
+    header h1 {font-size: 24px;}
+    nav a {color: white; margin: 0 10px; text-decoration: none; font-weight: bold;}
+    nav a:hover {text-decoration: underline;}
+
+    .hero {background: url('images1/cover.jpg') center/cover no-repeat; color: white; text-align: center; padding: 100px 20px;}
+    .hero h2 {font-size: 40px; margin-bottom: 20px;}
+    .hero p {font-size: 20px;}
+
+    section {padding: 60px 40px;}
+    .about, .services {text-align: center;}
+    .about p, .services p {max-width: 700px; margin: auto; line-height: 1.8;}
+
+    .gallery {display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;}
+    .gallery img {width: 100%; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s;}
+    .gallery img:hover {transform: scale(1.05);}
+
+    footer {background: #1e3a8a; color: white; text-align: center; padding: 20px;}
+    footer a {color: #facc15; text-decoration: none; font-weight: bold;}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>محلات الهيبة للدهان</h1>
+    <nav>
+      <a href="#about">من نحن</a>
+      <a href="#services">الخدمات</a>
+      <a href="#gallery">معرض الصور</a>
+      <a href="#contact">تواصل معنا</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>ألوان تبقى في الذاكرة ✨</h2>
+    <p>أفضل الدهانات وأعمال المقاولات مع محلات الهيبة</p>
+  </section>
+
+  <section id="about" class="about">
+    <h2>من نحن</h2>
+    <p>محلات الهيبة للدهان متخصصة في بيع أفضل أنواع الدهانات الخاصة بطلاء المنازل والمباني. كما نقدم خدمات المقاولات لنضمن لعملائنا تنفيذ جميع أعمال الدهان بأعلى جودة وبأحدث التقنيات.</p>
+  </section>
+
+  <section id="services" class="services">
+    <h2>خدماتنا</h2>
+    <p>✔ بيع جميع أنواع دهانات الهيبة الحديثة<br>
+       ✔ تنفيذ أعمال الدهانات للمنازل والمباني<br>
+       ✔ تصميم وتنفيذ ديكورات داخلية وخارجية</p>
+  </section>
+
+  <section id="gallery">
+    <h2 style="text-align:center; margin-bottom:20px;">معرض الصور</h2>
+    <div class="gallery" id="gallery-container">
+      <!-- الصور ستُعرض أوتوماتيكياً بواسطة JavaScript -->
+    </div>
+  </section>
+
+  <section id="contact" style="text-align:center;">
+    <h2>تواصل معنا</h2>
+    <p>العنوان : عدن - شارع الخمسين </p>
+    <p>📞 777283032</p>
+    <p>💬 <a href="https://wa.me/967777283032" target="_blank">تواصل عبر واتساب</a></p>
+  </section>
+
+  <footer>
+  <p>© 2025 محلات الهيبة للدهان</p>
+  <p>تحت إشراف المهندس عبدالله طاهر الحميقاني</p>
+  </footer>
+
+  <script>
+    // جلب بيانات الصور من ملف JSON
+    fetch('/gallery.json')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('gallery-container');
+        (data.items || []).forEach(item => {
+          const img = document.createElement('img');
+          img.src = item.image;
+          img.alt = item.title || '';
+          container.appendChild(img);
+        });
+      })
+      .catch(console.error);
+  </script>
+</body>
+</html>
