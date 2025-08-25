@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: your-username/alhaibah_site
+  repo: husam1218/alhaibahSite
   branch: main
 
 media_folder: "images1"
