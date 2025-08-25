@@ -1,6 +1,7 @@
 backend:
-  name: git-gateway
-  branch: main   # غيّرها إلى master إذا كان فرعك في GitHub اسمه master
+  name: github
+  repo: your-username/alhaibah_site
+  branch: main
 
 media_folder: "images1"
 public_folder: "/images1"
