@@ -2,6 +2,7 @@ backend:
   name: github
   repo: husam128/alnabntsite
   branch: main
+  auth_type: implicit
 
 media_folder: "images1"
 public_folder: "/images1"
