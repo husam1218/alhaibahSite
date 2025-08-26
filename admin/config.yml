@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: husam128/alnabntsite
+  repo: husam128/alhaibahSite
   branch: main
   auth_type: implicit
 
