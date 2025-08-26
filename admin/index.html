@@ -8,64 +8,51 @@
     <!-- Netlify Identity -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     
-    <!-- Netlify CMS -->
-    <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+    <!-- Netlify CMS من CDN مختلف -->
+    <script src="https://cdn.jsdelivr.net/npm/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
     
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             background-color: #f5f5f5;
             color: #333;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
+        #nc-root {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .error-message {
+            display: none;
+            text-align: center;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-        h1 {
-            color: #2c3e50;
-        }
-        .loading {
-            text-align: center;
-            padding: 40px;
-            font-size: 18px;
-            color: #666;
-        }
-        .loading:after {
-            content: "";
-            animation: dots 1.5s infinite;
-        }
-        @keyframes dots {
-            0%, 20% { content: "."; }
-            40% { content: ".."; }
-            60%, 100% { content: "..."; }
-        }
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            color: #7f8c8d;
-            font-size: 14px;
-        }
-        .error {
             color: #e74c3c;
-            text-align: center;
-            padding: 20px;
+            background-color: #fdeded;
             border: 1px solid #e74c3c;
             border-radius: 4px;
-            margin: 20px 0;
+            margin: 20px;
         }
         .retry-btn {
             background-color: #3498db;
@@ -79,52 +66,62 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>لوحة تحكم الموقع</h1>
-            <p>مرحباً بك في لوحة التحكم، يمكنك إدارة محتوى موقعك من هنا</p>
-        </header>
-        
-        <div id="nc-root">
-            <div class="loading">جاري تحميل لوحة التحكم</div>
+    <!-- العنصر الأساسي الذي ستحتويه لوحة التحكم -->
+    <div id="nc-root">
+        <div class="loading-container">
+            <div class="loading-spinner"></div>
+            <p>جاري تحميل لوحة التحكم...</p>
         </div>
-        
-        <div id="error-message" style="display: none;" class="error">
-            <p>حدث خطأ في تحميل لوحة التحكم. يرجى المحاولة مرة أخرى.</p>
-            <button class="retry-btn" onclick="window.location.reload()">إعادة المحاولة</button>
-        </div>
-        
-        <footer>
-            <p>© 2023 - جميع الحقوق محفوظة</p>
-        </footer>
+    </div>
+
+    <div id="error-message" class="error-message">
+        <p>حدث خطأ في تحميل لوحة التحكم. يرجى المحاولة مرة أخرى.</p>
+        <button class="retry-btn" onclick="window.location.reload()">إعادة المحاولة</button>
     </div>
 
     <script>
-        // كشف الأخطاء وعرض رسالة عند فشل التحميل
+        // كود تهيئة Netlify CMS بعد تحميل الصفحة بالكامل
+        document.addEventListener('DOMContentLoaded', function() {
+            // الانتظار لضمان تحميل جميع العناصر
+            setTimeout(function() {
+                if (typeof CMS !== 'undefined') {
+                    try {
+                        // محاولة تهيئة CMS
+                        CMS.init();
+                        console.log('Netlify CMS initialized successfully');
+                    } catch (error) {
+                        console.error('Error initializing CMS:', error);
+                        showError();
+                    }
+                } else {
+                    console.error('Netlify CMS not loaded');
+                    showError();
+                }
+            }, 1000);
+        });
+
+        // عرض رسالة الخطأ
+        function showError() {
+            document.getElementById('error-message').style.display = 'block';
+            document.querySelector('.loading-container').style.display = 'none';
+        }
+
+        // كشف فشل التحميل بعد فترة
         setTimeout(function() {
-            if (!document.querySelector('.nc-root') || 
-                document.querySelector('#nc-root').children.length === 1) {
-                document.getElementById('error-message').style.display = 'block';
-                document.querySelector('.loading').style.display = 'none';
+            if (document.querySelector('.loading-container').style.display !== 'none') {
+                showError();
             }
-        }, 10000); // بعد 10 ثوانٍ
+        }, 10000);
 
         // تهيئة Netlify Identity
         if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
+            window.netlifyIdentity.on("init", function(user) {
                 if (!user) {
-                    window.netlifyIdentity.on("login", () => {
+                    window.netlifyIdentity.on("login", function() {
                         document.location.href = "/admin/";
                     });
                 }
             });
-        }
-        
-        // إعادة التوجيه في حالة المصادقة
-        if (window.location.hash) {
-            if (window.location.hash.includes('access_token')) {
-                window.location.href = '/admin/';
-            }
         }
     </script>
 </body>
