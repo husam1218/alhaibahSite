@@ -1,22 +1,22 @@
 backend:
   name: github
-  repo: husam1218/alhaibahSite
+  repo: husam128/alnabntsite
   branch: main
 
 media_folder: "images1"
 public_folder: "/images1"
 
 collections:
-    name: "gallery"
-    label: "معرض الصور"
+  - name: "gallery"
+    label: "Gallery"  # تغيير من "import" إلى اسم أوضح
     folder: "content/gallery"
-        create:true
-        slug:"{{slug}}"
+    create: true
+    slug: "{{slug}}"  # تصحيح قيمة slug
     fields:
-      - label: "صور المعرض"
+      - label: "Items"
         name: "items"
         widget: "list"
-        summary: "{{fields.title}}"
+        summary: "{{fields.title}}"  # تصحيح بناء الجملة
         fields:
-          - { label: "عنوان", name: "title", widget: "string" }
-          - { label: "الصورة", name: "image", widget: "image" }
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Image", name: "image", widget: "image" }
