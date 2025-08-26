@@ -9,16 +9,16 @@ public_folder: "/images1"
 
 collections:
   - name: "gallery"
-    label: "Gallery"  # تغيير من "import" إلى اسم أوضح
+    label: "Gallery"
     folder: "content/gallery"
     create: true
-    slug: "{{slug}}"  # تصحيح قيمة slug
+    slug: "{{slug}}"
     fields:
-      - {label: "Title", name: "title", widget: "string" }  
+      - { label: "Title", name: "title", widget: "string", required: true }
       - label: "Items"
         name: "items"
         widget: "list"
-        summary: "{{fields.title}}"  # تصحيح بناء الجملة
+        summary: "{{fields.title}}"
         fields:
-          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Type", name: "type", widget: "string" }
           - { label: "Image", name: "image", widget: "image" }
