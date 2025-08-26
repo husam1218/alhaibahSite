@@ -7,7 +7,7 @@ media_folder: "images1"
 public_folder: "/images1"
 
 collections:
-  - name: "gallery"
+    name: "gallery"
     label: "معرض الصور"
     folder: "content/gallery"
         create:true
