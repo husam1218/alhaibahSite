@@ -9,7 +9,7 @@ public_folder: "/images1"
 collections:
   - name: "gallery"
     label: "معرض الصور"
-    file: "gallery.json"
+    files: "gallery.json"
     fields:
       - label: "صور المعرض"
         name: "items"
