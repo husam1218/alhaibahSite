@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة تحكم الموقع</title>
     
-    <!-- إضافة أداة تعريف Netlify -->
+    <!-- Netlify Identity -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     
-    <!-- إضافة Netlify CMS -->
+    <!-- Netlify CMS -->
     <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
     
     <style>
@@ -42,6 +42,15 @@
             font-size: 18px;
             color: #666;
         }
+        .loading:after {
+            content: "";
+            animation: dots 1.5s infinite;
+        }
+        @keyframes dots {
+            0%, 20% { content: "."; }
+            40% { content: ".."; }
+            60%, 100% { content: "..."; }
+        }
         footer {
             text-align: center;
             margin-top: 30px;
@@ -49,6 +58,23 @@
             border-top: 1px solid #eee;
             color: #7f8c8d;
             font-size: 14px;
+        }
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #e74c3c;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .retry-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -59,11 +85,13 @@
             <p>مرحباً بك في لوحة التحكم، يمكنك إدارة محتوى موقعك من هنا</p>
         </header>
         
-        <!-- هذا العنصر ضروري لعمل Netlify CMS -->
         <div id="nc-root">
-            <div class="loading">
-                <p>جاري تحميل لوحة التحكم...</p>
-            </div>
+            <div class="loading">جاري تحميل لوحة التحكم</div>
+        </div>
+        
+        <div id="error-message" style="display: none;" class="error">
+            <p>حدث خطأ في تحميل لوحة التحكم. يرجى المحاولة مرة أخرى.</p>
+            <button class="retry-btn" onclick="window.location.reload()">إعادة المحاولة</button>
         </div>
         
         <footer>
@@ -71,8 +99,17 @@
         </footer>
     </div>
 
-    <!-- تهيئة Netlify Identity -->
     <script>
+        // كشف الأخطاء وعرض رسالة عند فشل التحميل
+        setTimeout(function() {
+            if (!document.querySelector('.nc-root') || 
+                document.querySelector('#nc-root').children.length === 1) {
+                document.getElementById('error-message').style.display = 'block';
+                document.querySelector('.loading').style.display = 'none';
+            }
+        }, 10000); // بعد 10 ثوانٍ
+
+        // تهيئة Netlify Identity
         if (window.netlifyIdentity) {
             window.netlifyIdentity.on("init", user => {
                 if (!user) {
@@ -81,6 +118,13 @@
                     });
                 }
             });
+        }
+        
+        // إعادة التوجيه في حالة المصادقة
+        if (window.location.hash) {
+            if (window.location.hash.includes('access_token')) {
+                window.location.href = '/admin/';
+            }
         }
     </script>
 </body>
