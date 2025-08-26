@@ -13,6 +13,7 @@ collections:
     create: true
     slug: "{{slug}}"  # تصحيح قيمة slug
     fields:
+      - {label: "Title", name: "title", widget: "string" }  
       - label: "Items"
         name: "items"
         widget: "list"
