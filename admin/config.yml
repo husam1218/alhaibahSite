@@ -9,7 +9,9 @@ public_folder: "/images1"
 collections:
   - name: "gallery"
     label: "معرض الصور"
-    files: "gallery.json"
+    folder: "content/gallery"
+        create:true
+        slug:"{{slug}}"
     fields:
       - label: "صور المعرض"
         name: "items"
