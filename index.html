@@ -1,105 +1,148 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  
-
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>محلات الهيبة للدهان</title>
-  <style>
-  footer p:last-child {
-  font-size: 14px;
-  color: #f1f1f1;
-  margin-top: 5px;
-  font-style: italic;
-  }
-
-    * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tahoma', sans-serif;}
-    body {background: #f7f7f7; color: #333;}
-
-    header {background: #1e3a8a; color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center;}
-    header h1 {font-size: 24px;}
-    nav a {color: white; margin: 0 10px; text-decoration: none; font-weight: bold;}
-    nav a:hover {text-decoration: underline;}
-
-    .hero {background: url('images1/cover.jpg') center/cover no-repeat; color: white; text-align: center; padding: 100px 20px;}
-    .hero h2 {font-size: 40px; margin-bottom: 20px;}
-    .hero p {font-size: 20px;}
-
-    section {padding: 60px 40px;}
-    .about, .services {text-align: center;}
-    .about p, .services p {max-width: 700px; margin: auto; line-height: 1.8;}
-
-    .gallery {display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;}
-    .gallery img {width: 100%; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s;}
-    .gallery img:hover {transform: scale(1.05);}
-
-    footer {background: #1e3a8a; color: white; text-align: center; padding: 20px;}
-    footer a {color: #facc15; text-decoration: none; font-weight: bold;}
-  </style>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, viewport-fit=cover" />
+    <title>محلات الهيبة للدهان | الدهانات والطلاء المنزلي</title>
+    <meta name="description" content="محلات الهيبة للدهان - تشطيبات ودهانات منزلية احترافية. قطاع مشاريع تحت إشراف المهندس عبد الله طاهر الحميقاني." />
+    
+    <!-- Mobile-specific meta tags -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="الهيبة للدهان" />
+    <meta name="theme-color" content="#22c55e" />
+    <meta name="msapplication-TileColor" content="#22c55e" />
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+    
+    <!-- Manifest for PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Apple touch icons -->
+    <link rel="apple-touch-icon" href="/assets/images/logo.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/logo.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/logo.png" />
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body>
-  <header>
-    <h1>محلات الهيبة للدهان</h1>
-    <nav>
-      <a href="#about">من نحن</a>
-      <a href="#services">الخدمات</a>
-      <a href="#gallery">معرض الصور</a>
-      <a href="#contact">تواصل معنا</a>
-    </nav>
-  </header>
+    <header class="site-header">
+        <div class="container header-wrap">
+            <div class="brand">
+                <img id="brandLogo" src="assets/images/logo.png" alt="شعار محلات الهيبة للدهان" onerror="this.style.display='none'" />
+                <div class="brand-text">
+                    <h1 id="siteTitle">محلات الهيبة للدهان</h1>
+                    <p id="siteTagline" class="muted"></p>
+                </div>
+            </div>
+            <nav class="nav">
+                <a href="#about">من نحن</a>
+                <a href="#services">خدماتنا</a>
+                <a href="#projects">أعمالنا</a>
+                <a href="#contact" class="btn btn-primary">تواصل</a>
+            </nav>
+        </div>
+    </header>
 
-  <section class="hero">
-    <h2>ألوان تبقى في الذاكرة ✨</h2>
-    <p>أفضل الدهانات وأعمال المقاولات مع محلات الهيبة</p>
-  </section>
+    <section class="hero" id="hero">
+        <div class="container hero-inner">
+            <div class="hero-content">
+                <h2 id="heroTitle">لمسة جمالية تدوم</h2>
+                <p id="heroSubtitle" class="lead">نقدم حلول الدهان والتشطيب بجودة عالية وخبرة موثوقة.</p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-dark">شاهد أعمالنا</a>
+                    <a href="#contact" class="btn btn-light">اطلب عرض سعر</a>
+                </div>
+                <p class="engineer-note">قطاع المشاريع بإشراف المهندس <strong>عبد الله طاهر الحميقاني</strong></p>
+            </div>
+            <div class="hero-media">
+                <img id="heroImage" src="assets/images/hero.jpg" alt="ديكور ودهانات"/>
+            </div>
+        </div>
+    </section>
 
-  <section id="about" class="about">
-    <h2>من نحن</h2>
-    <p>محلات الهيبة للدهان متخصصة في بيع أفضل أنواع الدهانات الخاصة بطلاء المنازل والمباني. كما نقدم خدمات المقاولات لنضمن لعملائنا تنفيذ جميع أعمال الدهان بأعلى جودة وبأحدث التقنيات.</p>
-  </section>
+    <main>
+        <section id="about" class="section">
+            <div class="container grid-2">
+                <div>
+                    <h3>من نحن</h3>
+                    <p id="aboutText" class="para"></p>
+                    <ul class="bullets" id="aboutBullets"></ul>
+                </div>
+                <div class="card card-accent">
+                    <h4>لماذا نحن؟</h4>
+                    <ul class="checklist" id="whyUs"></ul>
+                </div>
+            </div>
+        </section>
 
-  <section id="services" class="services">
-    <h2>خدماتنا</h2>
-    <p>✔ بيع جميع أنواع دهانات الهيبة الحديثة<br>
-       ✔ تنفيذ أعمال الدهانات للمنازل والمباني<br>
-       ✔ تصميم وتنفيذ ديكورات داخلية وخارجية</p>
-  </section>
+        <section id="services" class="section bg-soft">
+            <div class="container">
+                <h3 class="section-title">خدماتنا</h3>
+                <div id="servicesGrid" class="cards-grid"></div>
+            </div>
+        </section>
 
-  <section id="gallery">
-    <h2 style="text-align:center; margin-bottom:20px;">معرض الصور</h2>
-    <div class="gallery" id="gallery-container">
-      <!-- الصور ستُعرض أوتوماتيكياً بواسطة JavaScript -->
-    </div>
-  </section>
+        <section id="projects" class="section">
+            <div class="container">
+                <div class="section-head">
+                    <h3 class="section-title">نماذج من أعمالنا</h3>
+                    <p class="muted">عرض لأبرز مشاريع الطلاء والتشطيبات التي نفذناها.</p>
+                </div>
+                <div id="gallery" class="gallery-grid"></div>
+            </div>
+        </section>
 
-  <section id="contact" style="text-align:center;">
-    <h2>تواصل معنا</h2>
-    <p>العنوان : عدن - شارع الخمسين </p>
-    <p>📞 777283032</p>
-    <p>💬 <a href="https://wa.me/967777283032" target="_blank">تواصل عبر واتساب</a></p>
-  </section>
+        <section id="contact" class="section contact-section bg-dark">
+            <div class="container contact-wrap">
+                <div>
+                    <h3>تواصل معنا</h3>
+                    <p id="contactBlurb" class="para"></p>
+                    <div class="contact-items" id="contactItems"></div>
+                </div>
+                <div class="contact-cta">
+                    <a id="whatsappLink" class="btn btn-primary" target="_blank" rel="noopener">راسلنا واتساب</a>
+                    <a id="phoneLink" class="btn btn-light" target="_blank" rel="noopener">اتصل الآن</a>
+                </div>
+            </div>
+        </section>
+    </main>
 
-  <footer>
-  <p>© 2025 محلات الهيبة للدهان</p>
-  <p>تحت إشراف المهندس عبدالله طاهر الحميقاني</p>
-  </footer>
+    <footer class="site-footer">
+        <div class="container footer-wrap">
+            <div>
+                <strong>محلات الهيبة للدهان</strong>
+                <div class="muted small" id="footerAddress"></div>
+            </div>
+            <div class="muted small">© <span id="year"></span> جميع الحقوق محفوظة</div>
+        </div>
+    </footer>
 
-  <script>
-    // جلب بيانات الصور من ملف JSON
-    fetch('/gallery.json')
-      .then(res => res.json())
-      .then(data => {
-        const container = document.getElementById('gallery-container');
-        (data.items || []).forEach(item => {
-          const img = document.createElement('img');
-          img.src = item.image;
-          img.alt = item.title || '';
-          container.appendChild(img);
+    <!-- Netlify Identity on homepage to handle invite/confirmation links -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+      (function(){
+        if (!window.netlifyIdentity) return;
+        // If arriving via invite/confirmation link, ensure modal opens to finish signup
+        var hasToken = (location.hash && (location.hash.indexOf('invite_token') !== -1 || location.hash.indexOf('confirmation_token') !== -1)) ||
+                       (location.search && (location.search.indexOf('invite_token') !== -1 || location.search.indexOf('confirmation_token') !== -1));
+        window.netlifyIdentity.on('init', function(user){
+          if (!user && hasToken) {
+            try { window.netlifyIdentity.open('signup'); } catch(e) { window.netlifyIdentity.open(); }
+          }
         });
-      })
-      .catch(console.error);
-  </script>
+        window.netlifyIdentity.on('login', function(){
+          // After finishing signup/login, go to admin
+          location.replace('/admin/');
+        });
+      })();
+    </script>
 </body>
 </html>
+

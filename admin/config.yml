@@ -1,26 +1,75 @@
 backend:
-  name: github
-  repo: husam128/alhaibahSite
+  name: git-gateway
   branch: main
-  auth_type: implicit
-  site_domain: alhaibah.netlify.app  # استبدل باسم موقعك الفعلي
 
-media_folder: "images1"
-public_folder: "/images1"
+local_backend: true
+
+media_folder: "assets/images"
+public_folder: "/assets/images"
+
+publish_mode: editorial_workflow
+
+site_url: "/"
+logo_url: "/assets/images/logo.png"
 
 collections:
-  - name: "gallery"
-    label: "Gallery"
-    folder: "content/gallery"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string", required: true }
-      - label: "Items"
-        name: "items"
-        widget: "list"
-        summary: "{{fields.title}}"
+  - name: "site"
+    label: "إعدادات الموقع"
+    files:
+      - label: "المحتوى العام"
+        name: "content"
+        file: "content.json"
+        editor:
+          preview: false
         fields:
-          - { label: "Type", name: "type", widget: "string" }
-          - { label: "Image", name: "image", widget: "image" }
-        
+          - { label: "عنوان الموقع", name: "site.title", widget: "string" }
+          - { label: "وصف قصير", name: "site.tagline", widget: "string", required: false }
+          - { label: "الشعار", name: "site.logo", widget: "image", required: false }
+          - label: "الواجهة"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "عنوان", name: "title", widget: "string" }
+              - { label: "وصف", name: "subtitle", widget: "string", required: false }
+              - { label: "صورة", name: "image", widget: "image", required: false }
+          - label: "من نحن"
+            name: "about"
+            widget: "object"
+            fields:
+              - { label: "نص", name: "text", widget: "text" }
+              - { label: "نقاط", name: "bullets", widget: "list", field: { label: "عنصر", name: "item", widget: "string" } }
+              - { label: "لماذا نحن", name: "whyUs", widget: "list", field: { label: "ميزة", name: "adv", widget: "string" } }
+          - label: "الخدمات"
+            name: "services"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "العنوان", name: "title", widget: "string" }
+              - { label: "الوصف", name: "description", widget: "text" }
+          - label: "المشاريع"
+            name: "projects"
+            widget: "list"
+            summary: "{{fields.caption}}"
+            fields:
+              - { label: "الصورة", name: "image", widget: "image" }
+              - { label: "الوصف", name: "caption", widget: "string", required: false }
+          - label: "التواصل"
+            name: "contact"
+            widget: "object"
+            fields:
+              - { label: "نص", name: "blurb", widget: "text" }
+              - label: "تفاصيل"
+                name: "details"
+                widget: "object"
+                fields:
+                  - { label: "الهاتف", name: "الهاتف", widget: "string", required: false }
+                  - { label: "البريد", name: "البريد", widget: "string", required: false }
+                  - { label: "العنوان", name: "العنوان", widget: "string", required: false }
+              - { label: "واتساب (أرقام فقط)", name: "whatsapp", widget: "string", required: false }
+              - { label: "رقم الاتصال", name: "phone", widget: "string", required: false }
+          - label: "التذييل"
+            name: "footer"
+            widget: "object"
+            fields:
+              - { label: "العنوان", name: "address", widget: "string" }
+
