@@ -1,293 +1,502 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>لوحة التحكم - محلات الهيبة للدهان</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
-    <style>
-      :root {
-        --bg: #0f1115;
-        --card: #141821;
-        --soft: #0d1220;
-        --text: #e5e7eb;
-        --muted: #94a3b8;
-        --primary: #22c55e;
-        --primary-ink: #052e1a;
-        --accent: #0991ff;
-      }
-
-      * { 
-        box-sizing: border-box; 
-        margin: 0;
-        padding: 0;
-      }
-
-      html { 
-        scroll-behavior: smooth; 
-        font-size: 16px;
-      }
-
-      body { 
-        margin: 0; 
-        font-family: 'Cairo', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-        background: radial-gradient(1200px 800px at 80% -10%, #0b1224, var(--bg));
-        color: var(--text);
-        line-height: 1.6;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .container {
-        width: min(1200px, 92vw);
-        margin: 0 auto;
-        padding: 0 1rem;
-      }
-
-      header { 
-        background: rgba(10,12,18,.95);
-        backdrop-filter: blur(8px);
-        border-bottom: 1px solid #202637;
-        padding: 1rem 0;
-        position: sticky;
-        top: 0;
-        z-index: 50;
-      }
-
-      .header-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
-        text-align: center;
-      }
-
-      .header-title {
-        font-size: clamp(1.5rem, 4vw, 2rem);
-        font-weight: 700;
-        color: var(--text);
-      }
-
-      .header-subtitle {
-        font-size: 0.95rem;
-        color: var(--muted);
-        max-width: 600px;
-      }
-
-      main { 
-        flex: 1;
-        padding: 2rem 0;
-      }
-
-      .admin-content {
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      .hint { 
-        color: var(--muted);
-        background: rgba(15, 23, 42, 0.3);
-        border: 1px solid #1e283f;
-        border-radius: 12px;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-        text-align: center;
-        font-size: 1rem;
-        line-height: 1.6;
-      }
-
-      .cms-container {
-        background: var(--card);
-        border: 1px solid #1e283f;
-        border-radius: 16px;
-        overflow: hidden;
-        min-height: 600px;
-      }
-
-      .loading {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 400px;
-        color: var(--muted);
-        font-size: 1.1rem;
-      }
-
-      .spinner {
-        width: 24px;
-        height: 24px;
-        border: 2px solid #334155;
-        border-top: 2px solid var(--primary);
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin-left: 0.5rem;
-      }
-
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-
-      .mobile-tips {
-        background: rgba(34, 197, 94, 0.1);
-        border: 1px solid rgba(34, 197, 94, 0.3);
-        border-radius: 12px;
-        padding: 1rem;
-        margin: 1rem 0;
-        text-align: center;
-      }
-
-      .mobile-tips h3 {
-        color: var(--primary);
-        font-size: 1.1rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .mobile-tips ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        text-align: right;
-      }
-
-      .mobile-tips li {
-        margin: 0.3rem 0;
-        font-size: 0.9rem;
-        color: var(--text);
-      }
-
-      .mobile-tips li::before {
-        content: '📱';
-        margin-left: 0.5rem;
-      }
-
-      /* Tablet styles */
-      @media (min-width: 768px) {
-        .header-content {
-          flex-direction: row;
-          justify-content: space-between;
-          text-align: left;
-        }
-
-        .hint {
-          text-align: left;
-        }
-
-        .mobile-tips {
-          text-align: left;
-        }
-
-        .mobile-tips ul {
-          text-align: right;
-        }
-      }
-
-      /* Desktop styles */
-      @media (min-width: 1024px) {
-        .container {
-          padding: 0;
-        }
-
-        main {
-          padding: 3rem 0;
-        }
-      }
-
-      /* Touch-friendly improvements */
-      @media (hover: none) and (pointer: coarse) {
-        .hint, .mobile-tips {
-          padding: 1.8rem;
-        }
-      }
-
-      /* High contrast mode support */
-      @media (prefers-contrast: high) {
-        .hint, .mobile-tips, .cms-container {
-          border: 2px solid var(--text);
-        }
-      }
-
-      /* Reduced motion support */
-      @media (prefers-reduced-motion: reduce) {
-        .spinner {
-          animation: none;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <div class="container">
-        <div class="header-content">
-          <div>
-            <h1 class="header-title">لوحة التحكم</h1>
-            <p class="header-subtitle">إدارة محتوى موقع محلات الهيبة للدهان</p>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <main>
-      <div class="container">
-        <div class="admin-content">
-          <div class="hint">
-            <strong>مرحباً بك في لوحة التحكم!</strong><br>
-            سيتم فتح محرر Decap CMS أدناه. تأكد من إعداد صلاحيات GitHub وNetlify.
-          </div>
-
-          <div class="mobile-tips">
-            <h3>نصائح للاستخدام على الهاتف:</h3>
-            <ul>
-              <li>استخدم وضع الشاشة الكاملة للحصول على تجربة أفضل</li>
-              <li>يمكنك تدوير الهاتف أفقياً لرؤية المزيد من المحتوى</li>
-              <li>استخدم التكبير/التصغير للوصول إلى العناصر الصغيرة</li>
-              <li>احفظ التغييرات بشكل متكرر لتجنب فقدان البيانات</li>
-            </ul>
-          </div>
-
-          <div class="cms-container">
-            <div class="loading">
-              جاري تحميل محرر المحتوى...
-              <div class="spinner"></div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haibah Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h2>Haibah Admin</h2>
             </div>
-          </div>
+            <ul class="nav-links">
+                <li><a href="#" class="active" data-page="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#" data-page="content"><i class="fas fa-file-alt"></i> Content</a></li>
+                <li><a href="#" data-page="users"><i class="fas fa-users"></i> Users</a></li>
+                <li><a href="#" data-page="analytics"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="#" data-page="settings"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+            <div class="user-profile">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User">
+                <span id="username">Admin User</span>
+                <button id="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="header">
+                <h1 id="page-title">Dashboard</h1>
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div id="content-area" class="content-area">
+                <!-- Dashboard Page -->
+                <div id="dashboard-page" class="page active">
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <div class="stat-icon users">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>1,254</h3>
+                                <p>Total Users</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon posts">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>86</h3>
+                                <p>Posts</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon views">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>24,892</h3>
+                                <p>Page Views</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon revenue">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>$4,865</h3>
+                                <p>Revenue</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <h2>Recent Activity</h2>
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-icon"><i class="fas fa-user-plus"></i></div>
+                                    <div class="activity-details">
+                                        <p>New user registered</p>
+                                        <span>2 minutes ago</span>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon"><i class="fas fa-file-alt"></i></div>
+                                    <div class="activity-details">
+                                        <p>New post published</p>
+                                        <span>1 hour ago</span>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon"><i class="fas fa-comment"></i></div>
+                                    <div class="activity-details">
+                                        <p>New comment on "Getting Started"</p>
+                                        <span>3 hours ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h2>Site Performance</h2>
+                            <div class="performance-chart">
+                                <canvas id="performanceChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Management Page -->
+                <div id="content-page" class="page">
+                    <div class="page-header">
+                        <h2>Content Management</h2>
+                        <button class="btn-primary" id="add-content-btn">
+                            <i class="fas fa-plus"></i> Add New
+                        </button>
+                    </div>
+
+                    <div class="content-filters">
+                        <div class="filter-group">
+                            <label>Filter by:</label>
+                            <select>
+                                <option>All Types</option>
+                                <option>Posts</option>
+                                <option>Pages</option>
+                                <option>Media</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Status:</label>
+                            <select>
+                                <option>All Status</option>
+                                <option>Published</option>
+                                <option>Draft</option>
+                                <option>Pending</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="content-list">
+                        <div class="content-item">
+                            <div class="content-info">
+                                <h3>Getting Started with Haibah</h3>
+                                <p>Last updated: 2 hours ago</p>
+                            </div>
+                            <div class="content-actions">
+                                <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="content-item">
+                            <div class="content-info">
+                                <h3>Advanced Features Guide</h3>
+                                <p>Last updated: 1 day ago</p>
+                            </div>
+                            <div class="content-actions">
+                                <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="content-item">
+                            <div class="content-info">
+                                <h3>FAQ and Troubleshooting</h3>
+                                <p>Last updated: 3 days ago</p>
+                            </div>
+                            <div class="content-actions">
+                                <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Users Management Page -->
+                <div id="users-page" class="page">
+                    <div class="page-header">
+                        <h2>User Management</h2>
+                        <button class="btn-primary" id="add-user-btn">
+                            <i class="fas fa-user-plus"></i> Add User
+                        </button>
+                    </div>
+
+                    <div class="users-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="user-info">
+                                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
+                                            <span>John Doe</span>
+                                        </div>
+                                    </td>
+                                    <td>john@example.com</td>
+                                    <td>Admin</td>
+                                    <td><span class="status active">Active</span></td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="user-info">
+                                            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="User">
+                                            <span>Jane Smith</span>
+                                        </div>
+                                    </td>
+                                    <td>jane@example.com</td>
+                                    <td>Editor</td>
+                                    <td><span class="status active">Active</span></td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="user-info">
+                                            <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="User">
+                                            <span>Robert Johnson</span>
+                                        </div>
+                                    </td>
+                                    <td>robert@example.com</td>
+                                    <td>Subscriber</td>
+                                    <td><span class="status inactive">Inactive</span></td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Analytics Page -->
+                <div id="analytics-page" class="page">
+                    <h2>Site Analytics</h2>
+                    <div class="analytics-grid">
+                        <div class="card">
+                            <h3>Traffic Overview</h3>
+                            <div class="chart-container">
+                                <canvas id="trafficChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3>Content Performance</h3>
+                            <div class="chart-container">
+                                <canvas id="contentChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3>User Demographics</h3>
+                            <div class="chart-container">
+                                <canvas id="demographicsChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3>Referral Sources</h3>
+                            <div class="referral-list">
+                                <div class="referral-item">
+                                    <span>Google</span>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 65%"></div>
+                                    </div>
+                                    <span>65%</span>
+                                </div>
+                                <div class="referral-item">
+                                    <span>Direct</span>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 20%"></div>
+                                    </div>
+                                    <span>20%</span>
+                                </div>
+                                <div class="referral-item">
+                                    <span>Social Media</span>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 10%"></div>
+                                    </div>
+                                    <span>10%</span>
+                                </div>
+                                <div class="referral-item">
+                                    <span>Other</span>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 5%"></div>
+                                    </div>
+                                    <span>5%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Page -->
+                <div id="settings-page" class="page">
+                    <h2>Site Settings</h2>
+                    <div class="settings-tabs">
+                        <button class="tab-btn active" data-tab="general">General</button>
+                        <button class="tab-btn" data-tab="seo">SEO</button>
+                        <button class="tab-btn" data-tab="security">Security</button>
+                        <button class="tab-btn" data-tab="integrations">Integrations</button>
+                    </div>
+
+                    <div class="settings-content">
+                        <!-- General Settings -->
+                        <div id="general-tab" class="tab-content active">
+                            <form>
+                                <div class="form-group">
+                                    <label>Site Title</label>
+                                    <input type="text" value="Haibah">
+                                </div>
+                                <div class="form-group">
+                                    <label>Site Description</label>
+                                    <textarea rows="3">A modern platform for all your needs</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Admin Email</label>
+                                    <input type="email" value="admin@haibah.netlify.app">
+                                </div>
+                                <div class="form-group">
+                                    <label>Timezone</label>
+                                    <select>
+                                        <option>UTC-12:00</option>
+                                        <option>UTC-11:00</option>
+                                        <option selected>UTC-10:00</option>
+                                        <option>UTC-09:00</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+
+                        <!-- SEO Settings -->
+                        <div id="seo-tab" class="tab-content">
+                            <form>
+                                <div class="form-group">
+                                    <label>Meta Title</label>
+                                    <input type="text" value="Haibah - Your Modern Platform">
+                                </div>
+                                <div class="form-group">
+                                    <label>Meta Description</label>
+                                    <textarea rows="3">Discover Haibah, the modern platform designed to meet all your needs with innovative features and user-friendly interface.</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Meta Keywords</label>
+                                    <input type="text" value="platform, modern, innovative, user-friendly">
+                                </div>
+                                <div class="form-group">
+                                    <label>Google Analytics ID</label>
+                                    <input type="text" placeholder="UA-XXXXXXXX-X">
+                                </div>
+                                <button type="submit" class="btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+
+                        <!-- Security Settings -->
+                        <div id="security-tab" class="tab-content">
+                            <form>
+                                <div class="form-group">
+                                    <label>Enable Two-Factor Authentication</label>
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="2fa-toggle" checked>
+                                        <label for="2fa-toggle"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Session Timeout (minutes)</label>
+                                    <input type="number" value="30">
+                                </div>
+                                <div class="form-group">
+                                    <label>Allowed Login Attempts</label>
+                                    <input type="number" value="5">
+                                </div>
+                                <div class="form-group">
+                                    <label>Enable Login Notifications</label>
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="login-notifications" checked>
+                                        <label for="login-notifications"></label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+
+                        <!-- Integrations Settings -->
+                        <div id="integrations-tab" class="tab-content">
+                            <div class="integration-item">
+                                <div class="integration-info">
+                                    <h3>Google Analytics</h3>
+                                    <p>Connect your Google Analytics account</p>
+                                </div>
+                                <button class="btn-secondary">Connect</button>
+                            </div>
+                            <div class="integration-item">
+                                <div class="integration-info">
+                                    <h3>Mailchimp</h3>
+                                    <p>Connect your Mailchimp account for email marketing</p>
+                                </div>
+                                <button class="btn-secondary">Connect</button>
+                            </div>
+                            <div class="integration-item">
+                                <div class="integration-info">
+                                    <h3>Stripe</h3>
+                                    <p>Connect your Stripe account for payments</p>
+                                </div>
+                                <button class="btn-secondary">Connect</button>
+                            </div>
+                            <div class="integration-item">
+                                <div class="integration-info">
+                                    <h3>Slack</h3>
+                                    <p>Connect your Slack workspace for notifications</p>
+                                </div>
+                                <button class="btn-secondary">Connect</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for Add/Edit Content -->
+    <div id="content-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Add New Content</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="content-form">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" id="content-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Content Type</label>
+                        <select id="content-type">
+                            <option>Post</option>
+                            <option>Page</option>
+                            <option>Media</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Content</label>
+                        <textarea id="content-body" rows="10" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="content-status">
+                            <option>Published</option>
+                            <option>Draft</option>
+                            <option>Pending</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Save</button>
+                        <button type="button" class="btn-secondary cancel-btn">Cancel</button>
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
-    </main>
+    </div>
 
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <script>
-      (function(){
-        if (!window.netlifyIdentity) return;
-        
-        // Optional: clear stale session when visiting /admin/?logout
-        if (new URLSearchParams(location.search).has('logout')) {
-          try { window.netlifyIdentity.logout(); } catch(e) {}
-        }
-        
-        window.netlifyIdentity.on('init', function(user){
-          if (!user) {
-            // Auto-open login to complete confirmation/login
-            try { window.netlifyIdentity.open(); } catch(e) {}
-            window.netlifyIdentity.on('login', function(){ location.replace('/admin/'); });
-          }
-        });
+    <!-- Notification Toast -->
+    <div id="notification" class="notification">
+        <div class="notification-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="notification-message">Operation successful!</span>
+        </div>
+        <button class="notification-close">&times;</button>
+    </div>
 
-        // Hide loading spinner when CMS is ready
-        window.addEventListener('load', function() {
-          setTimeout(function() {
-            const loading = document.querySelector('.loading');
-            if (loading) {
-              loading.style.display = 'none';
-            }
-          }, 2000);
-        });
-      })();
-    </script>
-  </body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/admin.js"></script>
+</body>
 </html>
-
