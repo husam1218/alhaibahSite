@@ -4,13 +4,13 @@ backend:
 
 local_backend: true
 
-media_folder: "assets/images"
-public_folder: "/assets/images"
+media_folder: "images1"
+public_folder: "/images1"
 
 publish_mode: editorial_workflow
 
 site_url: "/"
-logo_url: "/assets/images/logo.png"
+logo_url: "/images1/1.jpg"
 
 collections:
   - name: "site"
@@ -72,4 +72,21 @@ collections:
             widget: "object"
             fields:
               - { label: "العنوان", name: "address", widget: "string" }
+
+  - name: "gallery"
+    label: "معرض الصور"
+    files:
+      - label: "صور المعرض"
+        name: "gallery"
+        file: "gallery.json"
+        editor:
+          preview: false
+        fields:
+          - label: "العناصر"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "العنوان", name: "title", widget: "string" }
+              - { label: "الصورة", name: "image", widget: "image" }
 
